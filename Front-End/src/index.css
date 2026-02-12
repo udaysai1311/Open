@@ -1,0 +1,83 @@
+@import url('./styles/variables.css');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: var(--app-font-size);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+
+
+.glass-card {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 10px;
+  padding: 14px;
+  transition: all 0.3s ease;
+}
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #667eea;
+  box-shadow: 0 0 15px rgba(102, 126, 234, 0.3);
+  color: white;
+  outline: none;
+}
+
+.glass-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.glass-btn {
+  background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
+}
+
+.glass-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5);
+  color: white;
+}
+
+.form-label {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+.invalid-feedback {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  margin-top: 6px;
+}
+
+h2 {
+  letter-spacing: -0.5px;
+}

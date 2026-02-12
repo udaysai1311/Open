@@ -1,0 +1,125 @@
+.toast-container {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 10000;
+    min-width: 300px;
+    max-width: 450px;
+    background: #1a202c;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.toast-container.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.toast-container.hide {
+    transform: translateX(120%);
+    opacity: 0;
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    gap: 0.75rem;
+}
+
+.toast-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toast-container.success .toast-icon {
+    color: #48bb78;
+}
+
+.toast-container.error .toast-icon {
+    color: white;
+}
+
+.toast-container.error {
+    background: #e53e3e;
+    /* Red background */
+    border-color: #feb2b2;
+}
+
+.toast-container.warning .toast-icon {
+    color: #ed8936;
+}
+
+.toast-message {
+    flex: 1;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.toast-close-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.toast-close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* Progress Bar */
+.toast-progress {
+    height: 3px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.toast-progress-bar {
+    height: 100%;
+    width: 0;
+    transition: width linear;
+    animation: toast-progress-anim linear forwards;
+}
+
+.toast-container.success .toast-progress-bar {
+    background: #48bb78;
+}
+
+.toast-container.error .toast-progress-bar {
+    background: #f56565;
+}
+
+.toast-container.warning .toast-progress-bar {
+    background: #ed8936;
+}
+
+@keyframes toast-progress-anim {
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0%;
+    }
+}
+
+@media (max-width: 480px) {
+    .toast-container {
+        top: 1rem;
+        right: 1rem;
+        left: 1rem;
+        min-width: unset;
+    }
+}

@@ -1,0 +1,33 @@
+.client-layout {
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+}
+
+.client-main-content {
+    flex: 1;
+    margin-left: 80px;
+    /* Width of collapsed sidebar */
+    min-height: 100vh;
+    transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    width: calc(100% - 80px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .client-main-content {
+        margin-left: 0;
+        width: 100%;
+        padding-top: 60px;
+        /* Space for top bar */
+    }
+}
+
+@media (max-width: 480px) {
+    .client-main-content {
+        margin-left: 0;
+        width: 100%;
+        padding-top: 60px;
+    }
+}

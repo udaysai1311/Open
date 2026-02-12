@@ -1,0 +1,9 @@
+.required {
+    color: red;
+}
+
+.th-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}

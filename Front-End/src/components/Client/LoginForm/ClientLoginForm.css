@@ -1,0 +1,240 @@
+/* Dark Theme Variables */
+:root {
+    --bg-color: #09090b;
+    --card-bg: #121212;
+    --input-bg: #1c1c1c;
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1aa;
+    --accent-blue: #2563eb;
+    --accent-blue-hover: #1d4ed8;
+    --border-color: #27272a;
+}
+
+.client-login-wrapper {
+    min-height: 100vh;
+    width: 100%;
+    background-color: var(--bg-color);
+    /* Subtle geometric pattern background */
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow: hidden;
+    /* Fixes overflow from decorative elements */
+}
+
+/* Geometric accents */
+.client-login-wrapper::before,
+.client-login-wrapper::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.client-login-wrapper::before {
+    top: -100px;
+    left: -100px;
+}
+
+.client-login-wrapper::after {
+    bottom: -100px;
+    right: -100px;
+}
+
+.client-login-card {
+    width: 100%;
+    max-width: 400px;
+    z-index: 10;
+    border-radius: 0.5rem;
+    /* Matched to admin form */
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    /* Matched to admin form */
+}
+
+/* Header Section */
+.client-login-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.client-icon-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.client-login-icon {
+    width: 48px;
+    height: 48px;
+    /* Glowing effect for the logo */
+    /* filter: drop-shadow(0 0 15px rgba(37, 99, 235, 0.3)); */
+}
+
+.client-login-header h2 {
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.025em;
+}
+
+.client-login-header p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.client-link {
+    color: var(--text-primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.client-link:hover {
+    color: var(--accent-blue);
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 1.25rem;
+    position: relative;
+}
+
+.client-form-label {
+    display: none;
+    /* Hiding labels for the sleek look in the image */
+}
+
+.input-icon-wrapper {
+    position: relative;
+}
+
+.label-icon {
+    position: absolute;
+    left: 0.75rem;
+    /* Adjusted for smaller padding */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    /* Slightly smaller icon */
+    height: 18px;
+    color: #52525b;
+    z-index: 2;
+    transition: color 0.2s;
+}
+
+.client-glass-input {
+    width: 100%;
+    background-color: var(--input-bg);
+    border: 1px solid transparent;
+    border-radius: 0.3rem;
+    /* Matched to admin form */
+    padding: 0.5rem 0.5rem 0.5rem 2.25rem;
+    /* Matched to admin form + icon space */
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    /* Matched to admin form */
+    transition: all 0.2s ease;
+}
+
+.client-glass-input::placeholder {
+    color: #52525b;
+}
+
+.client-glass-input:focus {
+    outline: none;
+    background-color: #222222;
+    border-color: var(--border-color);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.client-glass-input:focus+.label-icon,
+.client-glass-input:focus~.label-icon {
+    color: var(--text-primary);
+}
+
+/* Validation Error */
+.client-glass-input.is-invalid {
+    border-color: #ef4444;
+    background-image: none;
+    /* Removing default bootstrap icon to keep it clean */
+}
+
+.invalid-feedback {
+    color: #ef4444;
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+    margin-left: 0.25rem;
+}
+
+/* Button */
+.client-glass-btn {
+    width: 100%;
+    background-color: var(--accent-blue);
+    color: white;
+    border: none;
+    border-radius: 0.3rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.client-glass-btn:hover {
+    background-color: var(--accent-blue-hover);
+}
+
+.btn-arrow {
+    display: none;
+    /* Removing arrow to match the clean button in image */
+}
+
+/* Footer / Extra Links */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+}
+
+.client-checkbox {
+    accent-color: var(--accent-blue);
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+}
+
+.form-check-label {
+    color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .client-login-card {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 1rem;
+    }
+}

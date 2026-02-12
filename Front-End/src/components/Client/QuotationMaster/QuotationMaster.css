@@ -1,0 +1,756 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+.quotation-master-wrapper {
+    padding: 2rem;
+
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+
+.quotation-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.page-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.header-icon-wrapper {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 16px rgba(118, 75, 162, 0.2);
+}
+
+.header-icon {
+    color: white;
+}
+
+.page-title {
+    font-size: 1.75rem;
+    color: #1a202c;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.02em;
+}
+
+.page-subtitle {
+    color: #718096;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.search-card {
+    background: #fdfdfd;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 2rem;
+}
+
+.search-section {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.search-input-group {
+    flex: 1;
+    position: relative;
+    max-width: 500px;
+}
+
+.search-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: #4a5568;
+    font-size: 0.9rem;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    color: #a0aec0;
+    pointer-events: none;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.5rem 1rem 0.5rem 3rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background: white;
+    color: #2d3748;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.search-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem;
+}
+
+.dropdown-item {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    color: #4a5568;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f7fafc;
+    color: #667eea;
+}
+
+.dropdown-item:hover .item-icon {
+    color: #667eea;
+}
+
+.item-icon {
+    color: #a0aec0;
+}
+
+.btn-search,
+.btn-add-quotation,
+.btn-save-all {
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.btn-search {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(118, 75, 162, 0.2);
+}
+
+.btn-search:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(118, 75, 162, 0.3);
+}
+
+.btn-search:disabled {
+    background: #cbd5e0;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.btn-add-quotation {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(72, 187, 120, 0.2);
+}
+
+.btn-add-quotation:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(72, 187, 120, 0.3);
+}
+
+.btn-save-all {
+    background: linear-gradient(135deg, #FF512F 0%, #DD2476 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(221, 36, 118, 0.3);
+}
+
+.btn-save-all:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(221, 36, 118, 0.4);
+}
+
+.btn-save-all:disabled {
+    background: #cbd5e0;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.results-section {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.quotation-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #2d3748;
+    background: white;
+}
+
+.quotation-table th,
+.quotation-table td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.quotation-table thead th {
+    background-color: #fdfdfd;
+    color: #4a5568;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid #e2e8f0;
+    white-space: nowrap;
+}
+
+.quotation-table tbody tr {
+    transition: background-color 0.2s;
+}
+
+.quotation-table tbody tr:hover {
+    background-color: #fdfdfd;
+}
+
+.quotation-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.new-quotation-row {
+    background-color: #f0fff4;
+    border-left: 3px solid #48bb78;
+}
+
+.new-quotation-row input,
+.new-quotation-row select {
+    background: white;
+}
+
+.new-quotation-row:hover {
+    background-color: #e6ffed;
+}
+
+.form-control-sm {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.form-control-sm:focus {
+    border-color: #667eea;
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.action-btn {
+    background: white;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    margin: 0 4px;
+    color: #718096;
+    transition: all 0.2s;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.action-btn:hover {
+    border-color: #667eea;
+    color: #667eea;
+    background: #f7fafc;
+    transform: translateY(-1px);
+}
+
+.action-btn.save-btn {
+    color: #48bb78;
+    border-color: #48bb78;
+    background: #f0fff4;
+}
+
+.action-btn.save-btn:hover {
+    background: #c6f6d5;
+}
+
+.action-btn.cancel-btn {
+    color: #f56565;
+    border-color: #f56565;
+    background: #fff5f5;
+}
+
+.action-btn.cancel-btn:hover {
+    background: #fed7d7;
+}
+
+.action-btn.delete-btn {
+    color: #e53e3e;
+    border-color: #e53e3e;
+    background: #fff5f5;
+}
+
+.action-btn.delete-btn:hover {
+    background: #fed7d7;
+}
+
+.action-btn.view-btn {
+    color: #3182ce;
+    border-color: #3182ce;
+    background: #ebf8ff;
+}
+
+.action-btn.view-btn:hover {
+    background: #bee3f8;
+}
+
+.status-badge {
+    padding: 0.375rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+}
+
+.status-badge.draft {
+    background-color: #e2e8f0;
+    color: #4a5568;
+}
+
+.status-badge.under-review {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.status-badge.approved {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.status-badge.rejected {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.status-badge.frozen {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.loading-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.text-center {
+    text-align: center;
+}
+
+.line-count-btn {
+    background: white;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    color: #667eea;
+    transition: all 0.2s;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.line-count-btn:hover {
+    background: #f7fafc;
+    border-color: #667eea;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+}
+
+.line-count-badge {
+    background: #667eea;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    min-width: 24px;
+    text-align: center;
+}
+
+.revision-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background-color: #e2e8f0;
+    color: #4a5568;
+    display: inline-block;
+}
+
+.revision-badge.revised {
+    background-color: #fef3c7;
+    color: #92400e;
+    border: 1px solid #f59e0b;
+}
+
+/* Custom Dropdown Styles */
+.qt-custom-dropdown {
+    position: relative;
+    width: 100%;
+    min-width: 120px;
+}
+
+.qt-dropdown-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.875rem;
+    color: #2d3748;
+    min-height: 38px;
+}
+
+.qt-dropdown-trigger:hover {
+    border-color: #cbd5e0;
+    background: #f7fafc;
+}
+
+.qt-dropdown-trigger .qt-placeholder {
+    color: #a0aec0;
+}
+
+.qt-dropdown-arrow {
+    color: #a0aec0;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+}
+
+.qt-dropdown-arrow.open {
+    transform: rotate(180deg);
+}
+
+.qt-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 0.25rem;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    z-index: 50;
+    max-height: 200px;
+    overflow-y: auto;
+    animation: dropdownFadeIn 0.15s ease-out;
+}
+
+.qt-dropdown-item {
+    padding: 0.6rem 0.75rem;
+    cursor: pointer;
+    color: #4a5568;
+    font-size: 0.875rem;
+    transition: all 0.1s;
+}
+
+.qt-dropdown-item:hover {
+    background: #f7fafc;
+    color: #2d3748;
+}
+
+.qt-dropdown-item.selected {
+    background: #ebf4ff;
+    color: #667eea;
+    font-weight: 600;
+}
+
+/* Custom Date Picker Styles */
+.qt-custom-datepicker {
+    position: relative;
+    width: 100%;
+    min-width: 120px;
+}
+
+.qt-datepicker-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.875rem;
+    color: #2d3748;
+    min-height: 38px;
+}
+
+.qt-datepicker-trigger:hover {
+    border-color: #cbd5e0;
+    background: #f7fafc;
+}
+
+.qt-datepicker-trigger .qt-placeholder {
+    color: #a0aec0;
+}
+
+.qt-calendar-icon {
+    color: #718096;
+    flex-shrink: 0;
+}
+
+.qt-datepicker-popup {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 0.25rem;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    z-index: 50;
+    padding: 0.5rem;
+    animation: dropdownFadeIn 0.15s ease-out;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* React Date Range Calendar Styling */
+.qt-datepicker-popup .rdrCalendarWrapper {
+    background: white;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+}
+
+.qt-datepicker-popup .rdrDateDisplayWrapper {
+    display: none;
+}
+
+.qt-datepicker-popup .rdrMonthAndYearWrapper {
+    padding: 0.75rem;
+    background: #fdfdfd;
+    border-radius: 8px 8px 0 0;
+}
+
+.qt-datepicker-popup .rdrMonthPicker select,
+.qt-datepicker-popup .rdrYearPicker select {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    color: #2d3748;
+    font-weight: 600;
+}
+
+.qt-datepicker-popup .rdrNextPrevButton {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    margin: 0 0.25rem;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qt-datepicker-popup .rdrNextPrevButton:hover {
+    background: #f7fafc;
+    border-color: #667eea;
+}
+
+.qt-datepicker-popup .rdrNextPrevButton i {
+    margin: 0;
+    padding: 0;
+    border-style: solid;
+    border-width: 2px 2px 0 0;
+    border-color: #667eea;
+    display: block;
+    width: 8px;
+    height: 8px;
+}
+
+.qt-datepicker-popup .rdrPprevButton i {
+    transform: rotate(-135deg);
+}
+
+.qt-datepicker-popup .rdrNextButton i {
+    transform: rotate(45deg);
+}
+
+.qt-datepicker-popup .rdrWeekDays {
+    padding: 0.5rem 0;
+}
+
+.qt-datepicker-popup .rdrWeekDay {
+    color: #718096;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+.qt-datepicker-popup .rdrDay {
+    color: #2d3748;
+}
+
+.qt-datepicker-popup .rdrDayNumber span {
+    color: #2d3748;
+    font-weight: 500;
+}
+
+.qt-datepicker-popup .rdrDayToday .rdrDayNumber span:after {
+    background: #667eea;
+}
+
+.qt-datepicker-popup .rdrDayPassive .rdrDayNumber span {
+    color: #cbd5e0;
+}
+
+.qt-datepicker-popup .rdrDay:not(.rdrDayPassive) .rdrInRange~.rdrDayNumber span,
+.qt-datepicker-popup .rdrDay:not(.rdrDayPassive) .rdrStartEdge~.rdrDayNumber span,
+.qt-datepicker-popup .rdrDay:not(.rdrDayPassive) .rdrEndEdge~.rdrDayNumber span,
+.qt-datepicker-popup .rdrDay:not(.rdrDayPassive) .rdrSelected~.rdrDayNumber span {
+    color: white;
+}
+
+.qt-datepicker-popup .rdrSelected,
+.qt-datepicker-popup .rdrInRange,
+.qt-datepicker-popup .rdrStartEdge,
+.qt-datepicker-popup .rdrEndEdge {
+    background: #667eea !important;
+}
+
+.qt-datepicker-popup .rdrDayHovered .rdrDayNumber:after {
+    border: 1px solid #667eea;
+}
+
+.qt-datepicker-popup .rdrMonthName {
+    color: #2d3748;
+    font-weight: 600;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .quotation-master-wrapper {
+        padding: 1rem;
+    }
+
+    .quotation-container {
+        padding: 1.5rem;
+    }
+
+    .page-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .search-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-input-group {
+        max-width: 100%;
+    }
+
+    .btn-search,
+    .btn-add-quotation,
+    .btn-save-all {
+        justify-content: center;
+        width: 100%;
+    }
+}
