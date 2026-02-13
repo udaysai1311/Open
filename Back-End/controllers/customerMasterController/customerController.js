@@ -5,29 +5,35 @@ import { createCustomer, getAllCustomers, getCustomerById, updateCustomer, toggl
 const getUserId = (req) => req.user ? req.user.id : 0;
 
 const create = async (req, res) => {
-    const payload = Array.isArray(req.body) ? req.body : [req.body];
-    const results = [];
-    const userId = getUserId(req);
+    try {
+        console.log("Received Customer Payload:", JSON.stringify(req.body, null, 2));
 
-    for (const customer of payload) {
-        const response = await createCustomer(customer, userId);
-        if (response.success) results.push(response.data);
+        const payload = Array.isArray(req.body) ? req.body : [req.body];
+        const results = [];
+        const userId = getUserId(req);
+
+        for (const customer of payload) {
+            const response = await createCustomer(customer, userId);
+            if (response.success) results.push(response.data);
+            else {
+                console.error("Error creating customer:", customer.customer_name, response.message);
+                results.push({ error: response.message, customer: customer.customer_name });
+            }
+        }
+
+        // Return 201 with results. If some failed, they will contain error messages.
+        res.status(201).json(results);
+    } catch (error) {
+        console.error("Critical error in create customer controller:", error);
+        res.status(500).json({ success: false, message: error.message });
     }
-
-    // Simplistic response for bulk
-    res.status(201).json(results);
 };
 
 const list = async (req, res) => {
     const response = await getAllCustomers();
     if (response.success) {
-        // Map to format expected by search API in frontend (customer_id, customer_name)
-        const mapped = response.data.map(c => ({
-            customer_id: c.id,
-            customer_name: c.customer_name,
-            ...c
-        }));
-        res.status(200).json(mapped);
+        // The DB now returns `customer_id` natively.
+        res.status(200).json(response.data);
     } else {
         res.status(500).json(response);
     }
@@ -36,12 +42,8 @@ const list = async (req, res) => {
 const getById = async (req, res) => {
     const response = await getCustomerById(req.params.id);
     if (response.success) {
-        const c = response.data;
-        const mapped = {
-            customer_id: c.id,
-            ...c
-        };
-        res.status(200).json(mapped);
+        // The DB returns `customer_id` natively.
+        res.status(200).json(response.data);
     } else {
         res.status(404).json(response);
     }

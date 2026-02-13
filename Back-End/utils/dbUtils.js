@@ -25,6 +25,9 @@ const createAllTables = async () => {
     CREATE TABLE IF NOT EXISTS customers (
         id SERIAL PRIMARY KEY,
         customer_name VARCHAR(255) NOT NULL,
+        customer_abbr VARCHAR(6) NOT NULL,
+        contact_person VARCHAR(255),
+        contact_person_designation VARCHAR(255),
         email VARCHAR(255),
         phone VARCHAR(50),
         address TEXT,

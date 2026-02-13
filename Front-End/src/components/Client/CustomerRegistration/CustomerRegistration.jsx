@@ -110,9 +110,10 @@ const CustomerRegistration = () => {
                 phoneNo: c.phone,
                 customerAddress: c.address,
                 isActive: c.is_active,
-                customerAbbr: '',
-                contactPerson: '',
-                designation: '',
+                customerAbbr: c.customer_abbr || '',
+                contactPerson: c.contact_person || '',
+                designation: c.contact_person_designation || '',
+                terms: c.terms || '',
             };
             setCustomerDetails([mappedCustomer]);
             setLoading(false);
@@ -133,6 +134,9 @@ const CustomerRegistration = () => {
                 const url = import.meta.env.VITE_CUSTOMER_UPDATE_API_URL.replace('{customerId}', updatedCustomer.customerId);
                 const payload = {
                     customer_name: updatedCustomer.customerName,
+                    customer_abbr: updatedCustomer.customerAbbr,
+                    contact_person: updatedCustomer.contactPerson,
+                    contact_person_designation: updatedCustomer.designation,
                     email: updatedCustomer.email,
                     phone: updatedCustomer.phoneNo,
                     address: updatedCustomer.customerAddress,
@@ -216,6 +220,9 @@ const CustomerRegistration = () => {
         try {
             const customersToSend = newCustomers.map(customer => ({
                 customer_name: customer.customerName,
+                customer_abbr: customer.customerAbbr,
+                contact_person: customer.contactPerson,
+                contact_person_designation: customer.designation,
                 email: customer.email,
                 phone: customer.phoneNo,
                 address: customer.customerAddress,
@@ -233,9 +240,10 @@ const CustomerRegistration = () => {
                 phoneNo: c.phone,
                 customerAddress: c.address,
                 isActive: c.is_active,
-                customerAbbr: '',
-                contactPerson: '',
-                designation: '',
+                customerAbbr: c.customer_abbr || '',
+                contactPerson: c.contact_person || '',
+                designation: c.contact_person_designation || '',
+                terms: c.terms || '',
             }));
             setCustomerDetails(prev => [...savedCustomers, ...prev]);
             setNewCustomers([]);
