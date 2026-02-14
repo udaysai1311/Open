@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { setToken, setUser } from '../../../utils/auth';
 import './ClientLoginForm.css';
 
 const schema = yup.object().shape({
@@ -35,13 +37,31 @@ const ClientLoginForm = () => {
         resolver: yupResolver(schema),
     });
 
+    const navigate = useNavigate();
+
     const onSubmit = async (data) => {
         try {
-            const url = `${import.meta.env.VITE_API_BASE_URL}/auth/client_login`;
-            const response = await axios.post(url, data);
+            // Updated endpoint to match backend
+            const url = `${import.meta.env.VITE_API_BASE_URL}/api/auth/login`;
+            const response = await axios.post(url, {
+                email: data.email,
+                password: data.password,
+                companyCode: data.companyCode
+            });
+
             console.log('Client Login Response:', response.data);
-            alert('Login Successful!');
-            // TODO: Handle successful login (e.g., redirect, store token)
+
+            if (response.data.success) {
+                // Store token and user data in cookies
+                setToken(response.data.token);
+                setUser(response.data.user);
+
+                alert('Login Successful!');
+                // Redirect to home page
+                navigate('/');
+            } else {
+                alert('Login Failed: ' + response.data.message);
+            }
         } catch (error) {
             console.error('Login Error:', error);
             alert('Login Failed: ' + (error.response?.data?.message || error.message));

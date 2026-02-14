@@ -323,8 +323,14 @@
     margin-top: 0.25rem;
 }
 
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
 .btn-submit {
-    width: 100%;
+    flex: 2;
     padding: 0.75rem;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -337,6 +343,7 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    height: 48px;
 }
 
 .btn-submit:hover {
@@ -345,21 +352,25 @@
 }
 
 .btn-cancel {
+    flex: 1;
     padding: 0.75rem;
-    background: #edf2f7;
-    color: #4a5568;
-    border: none;
+    background: #f1f5f9;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
     border-radius: 8px;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.5rem;
+    height: 48px;
 }
 
 .btn-cancel:hover {
     background: #e2e8f0;
-    color: #2d3748;
+    color: #475569;
 }
 
 /* Table */

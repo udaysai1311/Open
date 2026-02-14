@@ -85,12 +85,10 @@ const Machinery = () => {
         setLoading(true);
         try {
             const [masterRes, subRes, procRes, matRes] = await Promise.all([
-                axios.get('/api/machinery-master'),
-                axios.get('/api/machinery-subcategory'),
-                axios.get('/api/material-process'),
-                axios.get('/api/material-master')
-                // For future backend integration, uncomment below:
-                // axios.get('/api/main-machinery-categories')
+                axios.get(import.meta.env.VITE_MACHINERY_ALL_API_URL),
+                axios.get(import.meta.env.VITE_MACHINERY_SUB_ALL_API_URL),
+                axios.get(import.meta.env.VITE_PROCESS_PRICING_ALL_API_URL),
+                axios.get(import.meta.env.VITE_MATERIAL_ALL_API_URL)
             ]);
             setCategories(Array.isArray(masterRes.data) ? masterRes.data : []);
             setSubcategories(Array.isArray(subRes.data) ? subRes.data : []);
@@ -115,10 +113,16 @@ const Machinery = () => {
     const onMasterSubmit = async (data) => {
         setLoading(true);
         try {
+            const payload = {
+                name: data.category_name,
+                main_category_id: data.main_category_id,
+                description: data.description,
+                remark: data.remark
+            };
             if (editingCategory) {
-                await axios.put(`/api/machinery-master/${editingCategory.id}`, data);
+                await axios.put(import.meta.env.VITE_MACHINERY_SAVE_API_URL.replace('/add', `/${editingCategory.id}`), payload);
             } else {
-                await axios.post('/api/machinery-master', data);
+                await axios.post(import.meta.env.VITE_MACHINERY_SAVE_API_URL, payload);
             }
             categoryForm.reset();
             setEditingCategory(null);
@@ -134,7 +138,7 @@ const Machinery = () => {
         if (!window.confirm("Are you sure?")) return;
         setLoading(true);
         try {
-            await axios.delete(`/api/machinery-master/${id}`);
+            await axios.delete(import.meta.env.VITE_MACHINERY_DELETE_API_URL.replace('{id}', id));
             fetchData();
         } catch (error) {
             console.error("Error deleting category", error);
@@ -147,13 +151,13 @@ const Machinery = () => {
     const onSubSubmit = async (data) => {
         setLoading(true);
         try {
-            if (editingSub) {
-                await axios.put(`/api/machinery-subcategory/${editingSub.id}`, data);
+            if (editingSubcategory) {
+                await axios.put(import.meta.env.VITE_MACHINERY_SUB_SAVE_API_URL.replace('/add', `/${editingSubcategory.id}`), data);
             } else {
-                await axios.post('/api/machinery-subcategory', data);
+                await axios.post(import.meta.env.VITE_MACHINERY_SUB_SAVE_API_URL, data);
             }
-            subForm.reset();
-            setEditingSub(null);
+            subcategoryForm.reset();
+            setEditingSubcategory(null);
             fetchData();
         } catch (error) {
             console.error("Error saving subcategory", error);
@@ -166,7 +170,7 @@ const Machinery = () => {
         if (!window.confirm("Are you sure?")) return;
         setLoading(true);
         try {
-            await axios.delete(`/api/machinery-subcategory/${id}`);
+            await axios.delete(import.meta.env.VITE_MACHINERY_SUB_DELETE_API_URL.replace('{id}', id));
             fetchData();
         } catch (error) {
             console.error("Error deleting subcategory", error);
@@ -180,9 +184,9 @@ const Machinery = () => {
         setLoading(true);
         try {
             if (editingProcessId) {
-                await axios.put(`/api/material-process/${editingProcessId}`, data);
+                await axios.put(import.meta.env.VITE_PROCESS_PRICING_DELETE_API_URL.replace('{id}', editingProcessId), data);
             } else {
-                await axios.post('/api/material-process', data);
+                await axios.post(import.meta.env.VITE_PROCESS_PRICING_SAVE_API_URL, data);
             }
             processPricingForm.reset();
             setEditingProcessId(null);
@@ -198,7 +202,7 @@ const Machinery = () => {
         if (!window.confirm("Are you sure?")) return;
         setLoading(true);
         try {
-            await axios.delete(`/api/material-process/${id}`);
+            await axios.delete(import.meta.env.VITE_PROCESS_PRICING_DELETE_API_URL.replace('{id}', id));
             fetchData();
         } catch (error) {
             console.error("Error deleting process link", error);

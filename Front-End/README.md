@@ -18,3 +18,10 @@ If you are developing a production application, we recommend using TypeScript wi
 
 # Standards
 1. button padding = 0.75rem 1rem
+2. npm install js-cookie
+
+
+# Test Login Credentials
+1. Email: test@example.com
+2. Password: Password@123
+3. Company Code: UNI001

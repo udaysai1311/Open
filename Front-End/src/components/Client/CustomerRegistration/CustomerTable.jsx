@@ -187,6 +187,7 @@ const NewCustomerRow = ({ customer, onChange, onRemove, onOpenTerms }) => {
                     value={customer.customerAbbr}
                     onChange={handleChange}
                     placeholder="Abbr"
+                    maxLength="6"
                     required
                 />
             </td>

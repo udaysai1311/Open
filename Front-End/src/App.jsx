@@ -12,20 +12,23 @@ import QuotationMaster from './components/Client/QuotationMaster/QuotationMaster
 import MetalWeightCalculator from './components/Client/MetalWeightCalculator/MetalWeightCalculator'
 import Home from './components/Client/Home/Home'
 import { UserProvider } from './context/UserContext'
+import ProtectedRoute from './components/Common/ProtectedRoute'
 function App() {
 	return (
 		<UserProvider>
 			<BrowserRouter>
 				<Routes>
-					<Route element={<Layout />}>
-						<Route path="/customer_registration" element={<CustomerRegistration />} />
-						<Route path="/users" element={<UserManagement />} />
-						<Route path="/materials" element={<Materials />} />
-						<Route path="/machinery" element={<Machinery />} />
-						{/* <Route path="/process_pricing" element={<ProcessPricing />} /> */}
-						<Route path="/quotation-master" element={<QuotationMaster />} />
-						<Route path="/metal-weight-calculator" element={<MetalWeightCalculator />} />
-						<Route path="/" element={<Home />} />
+					<Route element={<ProtectedRoute />}>
+						<Route element={<Layout />}>
+							<Route path="/customer_registration" element={<CustomerRegistration />} />
+							<Route path="/users" element={<UserManagement />} />
+							<Route path="/materials" element={<Materials />} />
+							<Route path="/machinery" element={<Machinery />} />
+							{/* <Route path="/process_pricing" element={<ProcessPricing />} /> */}
+							<Route path="/quotation-master" element={<QuotationMaster />} />
+							<Route path="/metal-weight-calculator" element={<MetalWeightCalculator />} />
+							<Route path="/" element={<Home />} />
+						</Route>
 					</Route>
 					<Route path="/login" element={<ClientLoginForm />} />
 					<Route path="admin/login" element={<LoginForm />} />

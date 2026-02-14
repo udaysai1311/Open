@@ -3,13 +3,13 @@ import UserModel from "../../model/userModel.js";
 import { registerUser, loginUser } from "../../services/userVerificationServices/authServices.js";
 
 const register = async (req, res) => {
-    const { username, email, mobile, password } = req.body;
+    const { username, companyCode, email, mobile, password } = req.body;
 
-    if (!username || !email || !mobile || !password) {
+    if (!username || !companyCode || !email || !mobile || !password) {
         return res.status(400).json({ success: false, message: "All fields are required!" });
     }
 
-    const user = new UserModel({ username, email, mobile, password });
+    const user = new UserModel({ username, companyCode, email, mobile, password });
 
     try {
         const response = await registerUser(user);
@@ -25,14 +25,14 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, companyCode } = req.body;
 
-    if (!email || !password) {
-        return res.status(400).json({ success: false, message: "Email and password are required!" });
+    if (!email || !password || !companyCode) {
+        return res.status(400).json({ success: false, message: "Email, password and company code are required!" });
     }
 
     try {
-        const response = await loginUser(email, password);
+        const response = await loginUser(email, password, companyCode);
         if (response.success) {
             res.status(200).json(response);
         } else {

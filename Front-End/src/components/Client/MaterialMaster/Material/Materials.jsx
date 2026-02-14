@@ -6,30 +6,39 @@ import axios from 'axios';
 // import Loader from '../../Common/Loader/Loader';
 import { Trash2, Edit, Plus, Save, X, Database, Layers, Link2, Weight, AlertCircle, FileText, Scale, DollarSign, ArrowUp, Box } from 'lucide-react';
 import SearchableSelect from '../../Common/SearchableSelect/SearchableSelect';
+import Toast from '../../Common/Toast/Toast';
 import './Materials.css';
 
 // --- Validation Schemas ---
 const materialSchema = yup.object().shape({
     material_name: yup.string().required('Material Name is required'),
     material_grade: yup.string().required('Material Grade is required'),
-    Density: yup.string(),
-    unit: yup.string(),
-    current_price: yup.number().typeError('Price must be a number').positive('Price must be positive'),
-    description: yup.string(),
-    remark: yup.string(),
+    density: yup.string().nullable(),
+    unit: yup.string().nullable(),
+    current_price: yup.number()
+        .transform((value, originalValue) => originalValue === "" ? null : value)
+        .nullable()
+        .notRequired()
+        .typeError('Price must be a number'),
+    description: yup.string().nullable(),
+    remark: yup.string().nullable(),
 });
 
 const typeSchema = yup.object().shape({
     type_name: yup.string().required('Type Name is required'),
-    description: yup.string(),
-    remark: yup.string(),
+    description: yup.string().nullable(),
+    remark: yup.string().nullable(),
 });
 
 const linkSchema = yup.object().shape({
     material_id: yup.string().required('Material is required'),
     material_type_id: yup.string().required('Material Type is required'),
-    current_price: yup.number().typeError('Price must be a number').positive('Price must be positive'),
-    remark: yup.string(),
+    current_price: yup.number()
+        .transform((value, originalValue) => originalValue === "" ? null : value)
+        .nullable()
+        .notRequired()
+        .typeError('Price must be a number'),
+    remark: yup.string().nullable(),
 });
 
 const Materials = () => {
@@ -46,10 +55,21 @@ const Materials = () => {
     const [editingType, setEditingType] = useState(null);
     const [editingLink, setEditingLink] = useState(null);
 
+    // Toast State
+    const [toast, setToast] = useState({ isOpen: false, message: '', type: 'success' });
+
+    const showToast = (message, type = 'success') => {
+        setToast({ isOpen: true, message, type });
+    };
+
     // Forms
     const materialForm = useForm({ resolver: yupResolver(materialSchema) });
     const typeForm = useForm({ resolver: yupResolver(typeSchema) });
     const linkForm = useForm({ resolver: yupResolver(linkSchema) });
+
+    const emptyMaterial = { material_name: '', material_grade: '', density: '', unit: '', current_price: '', description: '', remark: '' };
+    const emptyType = { type_name: '', description: '', remark: '' };
+    const emptyLink = { material_id: '', material_type_id: '', current_price: '', remark: '' };
 
     // Fetch Data
     const fetchData = async () => {
@@ -78,16 +98,20 @@ const Materials = () => {
     const onMaterialSubmit = async (data) => {
         setLoading(true);
         try {
-            if (editingMaterial) {
-                await axios.put(import.meta.env.VITE_MATERIAL_UPDATE_API_URL.replace('{id}', editingMaterial.id), data);
+            if (editingMaterial && editingMaterial.id) {
+                const url = import.meta.env.VITE_MATERIAL_UPDATE_API_URL.replace('{id}', editingMaterial.id);
+                await axios.put(url, data);
+                showToast("Material updated successfully!");
             } else {
                 await axios.post(import.meta.env.VITE_MATERIAL_SAVE_API_URL, data);
+                showToast("Material saved successfully!");
             }
-            materialForm.reset();
+            materialForm.reset(emptyMaterial);
             setEditingMaterial(null);
             fetchData();
         } catch (error) {
             console.error("Error saving material", error);
+            showToast(error.response?.data?.message || "Error saving material", "error");
         } finally {
             setLoading(false);
         }
@@ -98,9 +122,11 @@ const Materials = () => {
         setLoading(true);
         try {
             await axios.delete(import.meta.env.VITE_MATERIAL_DELETE_API_URL.replace('{id}', id));
+            showToast("Material deleted successfully!");
             fetchData();
         } catch (error) {
             console.error("Error deleting material", error);
+            showToast("Error deleting material", "error");
         } finally {
             setLoading(false);
         }
@@ -110,16 +136,19 @@ const Materials = () => {
     const onTypeSubmit = async (data) => {
         setLoading(true);
         try {
-            if (editingType) {
+            if (editingType && editingType.id) {
                 await axios.put(import.meta.env.VITE_MATERIAL_TYPE_UPDATE_API_URL.replace('{id}', editingType.id), data);
+                showToast("Material Type updated successfully!");
             } else {
                 await axios.post(import.meta.env.VITE_MATERIAL_TYPE_SAVE_API_URL, data);
+                showToast("Material Type saved successfully!");
             }
-            typeForm.reset();
+            typeForm.reset(emptyType);
             setEditingType(null);
             fetchData();
         } catch (error) {
             console.error("Error saving type", error);
+            showToast(error.response?.data?.message || "Error saving type", "error");
         } finally {
             setLoading(false);
         }
@@ -130,9 +159,11 @@ const Materials = () => {
         setLoading(true);
         try {
             await axios.delete(import.meta.env.VITE_MATERIAL_TYPE_DELETE_API_URL.replace('{id}', id));
+            showToast("Material Type deleted successfully!");
             fetchData();
         } catch (error) {
             console.error("Error deleting type", error);
+            showToast("Error deleting type", "error");
         } finally {
             setLoading(false);
         }
@@ -142,16 +173,20 @@ const Materials = () => {
     const onLinkSubmit = async (data) => {
         setLoading(true);
         try {
-            if (editingLink) {
-                await axios.put(import.meta.env.VITE_MATERIAL_TYPE_LINK_UPDATE_API_URL.replace('{id}', editingLink.id), data);
+            if (editingLink && editingLink.id) {
+                const url = import.meta.env.VITE_MATERIAL_TYPE_LINK_UPDATE_API_URL.replace('{id}', editingLink.id);
+                await axios.put(url, data);
+                showToast("Link updated successfully!");
             } else {
                 await axios.post(import.meta.env.VITE_MATERIAL_TYPE_LINK_SAVE_API_URL, data);
+                showToast("Link saved successfully!");
             }
-            linkForm.reset();
+            linkForm.reset(emptyLink);
             setEditingLink(null);
             fetchData();
         } catch (error) {
             console.error("Error saving link", error);
+            showToast(error.response?.data?.message || "Error saving link", "error");
         } finally {
             setLoading(false);
         }
@@ -162,9 +197,11 @@ const Materials = () => {
         setLoading(true);
         try {
             await axios.delete(import.meta.env.VITE_MATERIAL_TYPE_LINK_DELETE_API_URL.replace('{id}', id));
+            showToast("Link deleted successfully!");
             fetchData();
         } catch (error) {
             console.error("Error deleting link", error);
+            showToast("Error deleting link", "error");
         } finally {
             setLoading(false);
         }
@@ -229,13 +266,13 @@ const Materials = () => {
                                 <div className="form-group">
                                     <div>
                                         <label className="form-label"><Weight size={16} /> Density (g/cm³)</label>
-                                        <input {...materialForm.register('Density')} className="form-input" placeholder="e.g. 7.85" />
+                                        <input {...materialForm.register('density')} className="form-input" placeholder="e.g. 7.85" />
                                     </div>
                                 </div>
                                 <div className="form-group">
                                     <div>
-                                        <label className="form-label"><Scale size={16} /> Unit</label>
-                                        <input {...materialForm.register('unit')} className="form-input" placeholder="e.g. kg" />
+                                        <label className="form-label"><Scale size={16} /> Unit (grams)</label>
+                                        <input {...materialForm.register('unit')} className="form-input" placeholder="e.g. 1000" />
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -247,13 +284,13 @@ const Materials = () => {
                                     <label className="form-label">Description</label>
                                     <textarea {...materialForm.register('description')} className="form-textarea" rows="2"></textarea>
                                 </div>
-                                <div className="flex gap-2">
+                                <div className="form-actions">
                                     <button type="submit" className="btn-submit">
-                                        <Save size={18} /> Save
+                                        <Save size={18} /> {editingMaterial ? 'Update' : 'Save'}
                                     </button>
                                     {editingMaterial && (
-                                        <button type="button" onClick={() => { setEditingMaterial(null); materialForm.reset(); }} className="btn-cancel">
-                                            <X size={18} />
+                                        <button type="button" onClick={() => { setEditingMaterial(null); materialForm.reset(emptyMaterial); }} className="btn-cancel">
+                                            <X size={18} /> Cancel
                                         </button>
                                     )}
                                 </div>
@@ -271,6 +308,7 @@ const Materials = () => {
                                             <th><Box size={16} /> Name</th>
                                             <th><ArrowUp size={16} /> Grade</th>
                                             <th><Weight size={16} /> Density</th>
+                                            <th>Description</th>
                                             <th><DollarSign size={16} /> Price</th>
                                             <th className="text-right">Actions</th>
                                         </tr>
@@ -280,7 +318,8 @@ const Materials = () => {
                                             <tr key={mat.id}>
                                                 <td>{mat.material_name}</td>
                                                 <td>{mat.material_grade}</td>
-                                                <td>{mat.Density}</td>
+                                                <td>{mat.density}</td>
+                                                <td>{mat.description}</td>
                                                 <td>{mat.current_price}</td>
                                                 <td className="text-right">
                                                     <button onClick={() => { setEditingMaterial(mat); materialForm.reset(mat); }} className="action-btn edit-btn"><Edit size={18} /></button>
@@ -290,7 +329,7 @@ const Materials = () => {
                                         ))}
                                         {materials.length === 0 && (
                                             <tr>
-                                                <td colSpan="5" className="empty-state"><AlertCircle size={18} /> No materials found</td>
+                                                <td colSpan="6" className="empty-state"><AlertCircle size={18} /> No materials found</td>
                                             </tr>
                                         )}
                                     </tbody>
@@ -318,13 +357,13 @@ const Materials = () => {
                                     <label className="form-label">Description</label>
                                     <textarea {...typeForm.register('description')} className="form-textarea" rows="2"></textarea>
                                 </div>
-                                <div className="flex gap-2">
+                                <div className="form-actions">
                                     <button type="submit" className="btn-submit">
-                                        <Save size={18} /> Save
+                                        <Save size={18} /> {editingType ? 'Update' : 'Save'}
                                     </button>
                                     {editingType && (
-                                        <button type="button" onClick={() => { setEditingType(null); typeForm.reset(); }} className="btn-cancel">
-                                            <X size={18} />
+                                        <button type="button" onClick={() => { setEditingType(null); typeForm.reset(emptyType); }} className="btn-cancel">
+                                            <X size={18} /> Cancel
                                         </button>
                                     )}
                                 </div>
@@ -421,13 +460,13 @@ const Materials = () => {
                                     <label className="form-label">Remark</label>
                                     <textarea {...linkForm.register('remark')} className="form-textarea" rows="2"></textarea>
                                 </div>
-                                <div className="flex gap-2">
+                                <div className="form-actions">
                                     <button type="submit" className="btn-submit">
-                                        <Save size={18} /> Save
+                                        <Save size={18} /> {editingLink ? 'Update' : 'Save'}
                                     </button>
                                     {editingLink && (
-                                        <button type="button" onClick={() => { setEditingLink(null); linkForm.reset(); }} className="btn-cancel">
-                                            <X size={18} />
+                                        <button type="button" onClick={() => { setEditingLink(null); linkForm.reset(emptyLink); }} className="btn-cancel">
+                                            <X size={18} /> Cancel
                                         </button>
                                     )}
                                 </div>
@@ -445,6 +484,7 @@ const Materials = () => {
                                             <th><Box size={16} /> Material</th>
                                             <th><Layers size={16} /> Type</th>
                                             <th><DollarSign size={16} /> Price</th>
+                                            <th>Remarks</th>
                                             <th className="text-right">Actions</th>
                                         </tr>
                                     </thead>
@@ -457,6 +497,7 @@ const Materials = () => {
                                                     <td>{mat ? `${mat.material_name} (${mat.material_grade})` : link.material_id}</td>
                                                     <td>{type ? type.type_name : link.material_type_id}</td>
                                                     <td>{link.current_price}</td>
+                                                    <td>{link.remark}</td>
                                                     <td className="text-right">
                                                         <button onClick={() => { setEditingLink(link); linkForm.reset(link); }} className="action-btn edit-btn"><Edit size={18} /></button>
                                                         <button onClick={() => deleteLink(link.id)} className="action-btn delete-btn"><Trash2 size={18} /></button>
@@ -466,7 +507,7 @@ const Materials = () => {
                                         })}
                                         {links.length === 0 && (
                                             <tr>
-                                                <td colSpan="4" className="empty-state"><AlertCircle size={18} /> No links found</td>
+                                                <td colSpan="5" className="empty-state"><AlertCircle size={18} /> No links found</td>
                                             </tr>
                                         )}
                                     </tbody>
@@ -476,6 +517,10 @@ const Materials = () => {
                     </div>
                 )}
             </div>
+            <Toast
+                {...toast}
+                onClose={() => setToast({ ...toast, isOpen: false })}
+            />
         </div>
     );
 };

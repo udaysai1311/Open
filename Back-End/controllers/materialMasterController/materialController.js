@@ -25,6 +25,7 @@ const getMaterialById = async (req, res) => {
 };
 
 const updateMaterial = async (req, res) => {
+    console.log("updateMaterial called with ID:", req.params.id, "Data:", req.body);
     const userId = getUserId(req);
     const response = await service.updateMaterial(req.params.id, req.body, userId);
     if (response.success) res.status(200).json(response.data);
@@ -53,6 +54,7 @@ const getTypes = async (req, res) => {
 };
 
 const updateType = async (req, res) => {
+    console.log("updateType called with ID:", req.params.id, "Data:", req.body);
     const userId = getUserId(req);
     const response = await service.updateMaterialType(req.params.id, req.body, userId);
     if (response.success) res.status(200).json(response.data);
@@ -80,6 +82,14 @@ const getLinkedMaterials = async (req, res) => {
     else res.status(500).json(response);
 };
 
+const updateLink = async (req, res) => {
+    console.log("updateLink called with ID:", req.params.id, "Data:", req.body);
+    const userId = getUserId(req);
+    const response = await service.updateLinkedMaterial(req.params.id, req.body, userId);
+    if (response.success) res.status(200).json(response.data);
+    else res.status(500).json(response);
+};
+
 const deleteLink = async (req, res) => {
     const userId = getUserId(req);
     const response = await service.deleteLinkedMaterial(req.params.id, userId);
@@ -90,5 +100,5 @@ const deleteLink = async (req, res) => {
 export {
     createMaterial, getMaterials, getMaterialById, updateMaterial, deleteMaterial,
     createType, getTypes, updateType, deleteType,
-    linkMaterials, getLinkedMaterials, deleteLink
+    linkMaterials, getLinkedMaterials, updateLink, deleteLink
 };

@@ -138,7 +138,7 @@ const linkMaterialType = async (data, userId) => {
 const getLinkedMaterials = async () => {
     try {
         const query = `
-            SELECT l.id, m.material_name, t.type_name, l.current_price, l.remark, m.unit
+            SELECT l.id, l.material_id, l.material_type_id, m.material_name, t.type_name, l.current_price, l.remark, m.unit
             FROM material_type_links l
             JOIN materials m ON l.material_id = m.id
             JOIN material_types t ON l.material_type_id = t.id
@@ -147,6 +147,22 @@ const getLinkedMaterials = async () => {
         `;
         const result = await pool.query(query);
         return { success: true, data: result.rows };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+};
+
+const updateLinkedMaterial = async (id, data, userId) => {
+    try {
+        const query = `
+            UPDATE material_type_links
+            SET material_id = $1, material_type_id = $2, current_price = $3, remark = $4, updated_by = $5, updated_at = CURRENT_TIMESTAMP
+            WHERE id = $6
+            RETURNING *;
+        `;
+        const values = [data.material_id, data.material_type_id, data.current_price, data.remark, userId, id];
+        const result = await pool.query(query, values);
+        return { success: true, data: result.rows[0] };
     } catch (error) {
         return { success: false, message: error.message };
     }
@@ -162,9 +178,8 @@ const deleteLinkedMaterial = async (id, userId) => {
     }
 };
 
-
 export {
     createMaterial, getAllMaterials, getMaterialById, updateMaterial, deleteMaterial,
     createMaterialType, getAllMaterialTypes, updateMaterialType, deleteMaterialType,
-    linkMaterialType, getLinkedMaterials, deleteLinkedMaterial
+    linkMaterialType, getLinkedMaterials, updateLinkedMaterial, deleteLinkedMaterial
 };
