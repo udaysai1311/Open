@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { setToken, setUser } from '../../../utils/auth';
+import Toast from '../Common/Toast/Toast';
 import './ClientLoginForm.css';
 
 const schema = yup.object().shape({
@@ -39,6 +40,13 @@ const ClientLoginForm = () => {
 
     const navigate = useNavigate();
 
+    // Toast State
+    const [toast, setToast] = useState({ isOpen: false, message: '', type: 'success' });
+
+    const showToast = (message, type = 'success') => {
+        setToast({ isOpen: true, message, type });
+    };
+
     const onSubmit = async (data) => {
         try {
             // Updated endpoint to match backend
@@ -56,15 +64,17 @@ const ClientLoginForm = () => {
                 setToken(response.data.token);
                 setUser(response.data.user);
 
-                alert('Login Successful!');
-                // Redirect to home page
-                navigate('/');
+                showToast('Login Successful!', 'success');
+                // Redirect to home page after a short delay to let toast show
+                setTimeout(() => {
+                    navigate('/');
+                }, 1000);
             } else {
-                alert('Login Failed: ' + response.data.message);
+                showToast('Login Failed: ' + response.data.message, 'error');
             }
         } catch (error) {
             console.error('Login Error:', error);
-            alert('Login Failed: ' + (error.response?.data?.message || error.message));
+            showToast('Login Failed: ' + (error.response?.data?.message || error.message), 'error');
         }
     };
 
@@ -158,6 +168,10 @@ const ClientLoginForm = () => {
                     </div>
                 </div>
             </div>
+            <Toast
+                {...toast}
+                onClose={() => setToast({ ...toast, isOpen: false })}
+            />
         </div>
     );
 };
